@@ -1,37 +1,20 @@
-package com.example.demo.model;
-
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+package com.example.demo;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.Table;
 
 @Entity
-@Table(name="auth_user")
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="user_id")
     private int id;
-    @Column (name="username")
     private String username;
-    @Column (name="email")
     private String email;
-    @Column (name="password")
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="auth_user_role",joinColumns = @JoinColumn(name="user_id"),inverserJoinColumns = @JoinColumn(name = "auth_role_id"))
-    private Set<Role> roles;
+    private String status;
 
     public int getId() {
         return id;
@@ -65,11 +48,12 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+
+    public String getStatus() {
+        return status;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
