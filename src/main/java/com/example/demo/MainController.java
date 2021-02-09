@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/flight") // This means URL's start with /demo (after Application path)
+@CrossOrigin
+
 public class MainController {
   @Autowired
   private FlightRepository flightRepository;
@@ -33,6 +35,8 @@ public class MainController {
   private UserRepository userRepository;
 
   @PostMapping(path = "/addFlight") // Map ONLY POST Requests
+  @CrossOrigin
+
   public @ResponseBody String newFlight(@RequestParam String departing, @RequestParam String destination,
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date departureTime) {
     // @ResponseBody means the returned String is the response, not a view name
@@ -46,6 +50,8 @@ public class MainController {
   }
 
   @PostMapping(path = "/addReservation") // Map ONLY POST Requests
+  @CrossOrigin
+
   public @ResponseBody String newReservation(@RequestParam int userId, @RequestParam int flightId) {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
@@ -64,6 +70,8 @@ public class MainController {
     return "Saved";
   }
   @PostMapping(path = "/removeReservation") 
+  @CrossOrigin
+
   public @ResponseBody String removeReservation(@RequestParam int userId, @RequestParam int flightId) {
     Long uid = (long) userId;
     long fid = (long) flightId; 
@@ -78,6 +86,8 @@ public class MainController {
     return "Cancel";
   }
   @PostMapping(path = "/getUserReservations") 
+  @CrossOrigin
+
   public @ResponseBody User getUserReservations(@RequestParam int userId) throws JsonProcessingException {
     Long uid=(long)userId;
     Optional<User> user=userRepository.findById( uid);
@@ -176,6 +186,8 @@ public class MainController {
   }
   
   @GetMapping(path="/search")
+  @CrossOrigin
+
   public @ResponseBody Iterable<Flight> searchFlights(@RequestParam String departing
   , @RequestParam String destination, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date departureTime) {
     // This returns a JSON or XML with the users
