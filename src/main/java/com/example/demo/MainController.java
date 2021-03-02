@@ -170,6 +170,14 @@ public class MainController {
     
     return user.getId();
   }
+  @PostMapping(path="/deleteUser") // Map ONLY POST Requests
+  @CrossOrigin
+  public @ResponseBody String deleteUser(@RequestParam int userId) 
+  {
+    userRepository.deleteById((long) userId);
+    return "success";
+  }
+
   @PostMapping(path="/editCard") // Map ONLY POST Requests
   @CrossOrigin
 @ResponseBody String editCard(@RequestParam int cardId, @RequestParam String cardname,@RequestParam String cardnum, @RequestParam String cardcvc, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date carddate) {

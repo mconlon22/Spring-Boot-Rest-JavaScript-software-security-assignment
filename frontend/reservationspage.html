@@ -101,7 +101,8 @@
   
 
 
-</script><script> 
+        </script>
+    <script> 
       //load login or logout buttons
                 var nav=document.getElementById("nav")
                 var b = document.createElement('button');
@@ -117,7 +118,7 @@
                 b1.setAttribute("class","btn");
                 b1.classList.add("btn-primary");
                 b1.setAttribute("value",'signUp');
-                b1.appendChild(document.createTextNode("Sign Up"));
+                b1.appendChild(document.createTextNode("Sign up as Executive Member"));
                 nav.appendChild(b1)
 
                }
@@ -127,6 +128,11 @@
                 b.setAttribute("value",'logout');
                 b.appendChild(document.createTextNode("logout"));
                 nav.appendChild(b)
+                b1.setAttribute("class","btn");
+                b1.classList.add("btn-primary");
+                b1.setAttribute("value",'account');
+                b1.appendChild(document.createTextNode("My Account"));
+                nav.appendChild(b1)
                 }
 
                 document.addEventListener("click",
@@ -148,6 +154,14 @@
                     window.location.replace("./login.html");
 
 
+}
+if(e.target.value =="signUp"){
+      console.log(e.target.value)
+      window.location.replace("./signUp.html");
+}
+if(e.target.value =="account"){
+      console.log(e.target.value)
+      window.location.replace("./editDetails.html");
 }
                 })
 

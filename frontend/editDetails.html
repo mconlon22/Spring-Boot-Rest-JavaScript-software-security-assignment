@@ -15,11 +15,16 @@
 <body>
   <form  style="border:1px solid #ccc">
     <div class="container">
-      <h1>Edit Your Details</h1>
-      <p>Edit the text in each box and submit</p>
       
       <hr>
       <button id='editcards'   >Edit Card Details</button>
+      <br/>
+      <br/>
+      
+      <button id='deleteAccount'   >Delete My Account</button>
+      <h1>Edit Your Details</h1>
+      <p>Edit the text in each box and submit</p>
+
       
           <label for="email"><b>Email</b></label>
           <input id="email" type="text" placeholder="Enter Email" name="email" required>
@@ -121,6 +126,32 @@ document.getElementById('editcards').addEventListener('click', function editcard
           })
           .then(function (response) {
              
+            })
+          .catch(function (error) {
+            console.log(error);
+          })
+         
+          
+            
+            }
+            if(element.id == 'deleteAccount'){
+            myStorage = window.localStorage;
+            e.preventDefault()
+           
+          userid=myStorage.getItem('userId')
+            console.log(fname,modal_surname,modal_phone,modal_address)
+            axios.post('http://localhost:8080/flight/deleteUser',null, { params:{
+              
+              userId: userid,
+             
+          }
+            
+          })
+          .then(function (response) {
+            window.localStorage.removeItem('userId')
+            window.localStorage.removeItem('logged_in')
+
+             window.location.replace('./')
             })
           .catch(function (error) {
             console.log(error);
