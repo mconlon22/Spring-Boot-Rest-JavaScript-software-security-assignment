@@ -38,7 +38,7 @@
 <script>
     //creates the table 
     var userId=window.localStorage.getItem('userId')
-    axios.post('http://localhost:8080/flight/getUserReservations',null, { params:{
+    axios.post('http://localhost:8080/flight/getCards',null, { params:{
               
               userId: userId,
               
@@ -47,8 +47,8 @@
           })
           .then(function (response) {
             var user=response.data
-            console.log(user)
-              var reservations=response.data.reservations
+            console.log(response)
+              var cards=response.data
               var body = document.getElementsByTagName('body')[0];
             var tbl = document.createElement('table');
             tbl.classList.add('table')
@@ -57,34 +57,45 @@
             tbl.style.width = '100%';
             tbl.setAttribute('border', '1');
             var tbdy = document.createElement('tbody');
-            for (var i = 0; i < reservations.length; i++) {
+            for (var i = 0; i < cards.length; i++) {
                 var tr = document.createElement('tr');
-                var datestr=sqlToJsDate(reservations[i].departureTime)
                 
                 console.log('datestr')
 
-                console.log(datestr)
                 var departing = document.createElement('td');
-                departing.appendChild(document.createTextNode(reservations[i].departing))
+                departing.appendChild(document.createTextNode(cards[i].cardname))
                 tr.appendChild(departing)
                 var destination = document.createElement('td');
-                destination.appendChild(document.createTextNode(reservations[i].destination))
+                destination.appendChild(document.createTextNode(cards[i].cardnum))
                 tr.appendChild(destination)
                 var date = document.createElement('td');
-                date.appendChild(document.createTextNode(datestr))
+                date.appendChild(document.createTextNode(cards[i].cardcvc))
                 tr.appendChild(date)
                 var name = document.createElement('td');
-                name.appendChild(document.createTextNode(`${user.firstname} ${user.surname}`))
+                name.appendChild(document.createTextNode(cards[i].carddate))
                 tr.appendChild(name)
                 var date = document.createElement('td');
                 var b = document.createElement('button');
                 b.setAttribute("class","btn");
                 b.classList.add("btn-primary");
-                b.setAttribute("value",reservations[i].id);
+                b.setAttribute("value",cards[i].card_id);
                 //setting the attribute of 
-                b.setAttribute("id",'Cancel');
+                b.setAttribute("id",'Delete');
 
-                b.appendChild(document.createTextNode("Cancel"));
+                b.appendChild(document.createTextNode("Delete"));
+                date.appendChild(b)
+               
+                tr.appendChild(date )
+
+                var date = document.createElement('td');
+                var b = document.createElement('button');
+                b.setAttribute("class","btn");
+                b.classList.add("btn-primary");
+                b.setAttribute("value",cards[i].card_id);
+                //setting the attribute of 
+                b.setAttribute("id",'Edit');
+
+                b.appendChild(document.createTextNode("Edit Card Details"));
                 date.appendChild(b)
                 tr.appendChild(date )
 
@@ -155,36 +166,24 @@
                 
                 </script>
 <script>
-    function sqlToJsDate(sqlDate){
-        var sqlDateArr1 = sqlDate.split("-");
-        var sYear = sqlDateArr1[0];
-        var sMonth = (Number(sqlDateArr1[1]) - 1).toString();
-        var sqlDateArr2 = sqlDateArr1[2].split(" ");
-        var sDay = sqlDateArr2[0].split("T")[0];
-        var sqlDateArr3 = sqlDateArr2[0].split(":");
-        var sHour = sqlDateArr3[0].split("T")[1];
-    
-        var sMinute = sqlDateArr3[1];
-        var sqlDateArr4 = sqlDateArr3[2].split(".");
-        //format of sqlDateArr4[] = ['ss','ms']
-        var sSecond = sqlDateArr4[0];
-        var sMillisecond = sqlDateArr4[1];
-         var datestr=`${sHour}:${sMinute}  ${sDay}/${sYear}/${sMonth}  `
-        return datestr
-    }
+  
 
 //handles canceling flights
     document.addEventListener("click",
                 function(e) {
-                  if(e.target.id =="Cancel"){
-                    var flightId=e.target.value;
+                var cardId=e.target.value;
+                localStorage.setItem("cardId",cardId)
+                  if(e.target.id =="Edit"){
                     console.log(e.target.value)
+                    window.location.replace("./editcard.html")
+
+                  }
+                  if(e.target.id =="Delete"){
                    
 
-                            axios.post('http://localhost:8080/flight/removeReservation',null, { params:{
+                            axios.post('http://localhost:8080/flight/removeCard',null, { params:{
                         
-                        userId: window.localStorage.getItem('userId'),
-                                flightId: flightId
+                                cardId: cardId,
                     }
                     
                     })
@@ -198,6 +197,7 @@
 
 
                   }
+
                  
                   })
                   

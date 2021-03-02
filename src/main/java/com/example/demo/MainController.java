@@ -100,23 +100,39 @@ public class MainController {
     return null;
     
   }
-  @PostMapping(path="/addUser") // Map ONLY POST Requests
+  @PostMapping(path = "/getCards") 
   @CrossOrigin
-  public @ResponseBody Long newUser(@RequestParam String firstname, @RequestParam String surname,
-      @RequestParam String phone, @RequestParam String address, @RequestParam String email,
-      @RequestParam String password) 
-  {
- 
-    User user = new User();
-    user.setFirstname(firstname);
-    user.setSurname(surname);
-    user.setEmail(email);
-    user.setPhone(phone);
-    user.setAddress(address);
-    user.setPassword(address);
-    userRepository.save(user);
+
+  public @ResponseBody List<Card> getCards(@RequestParam int userId) throws JsonProcessingException {
+    Long uid=(long)userId;
+    List<Card> cards = cardRepository.findByCardUser(uid);
     
-    return user.getId();
+     return cards;
+    
+    
+    
+  }
+  @PostMapping(path = "/getCard") 
+  @CrossOrigin
+
+  public @ResponseBody Card getCard(@RequestParam int cardId) throws JsonProcessingException {
+    Long uid=(long)cardId;
+    Card card = cardRepository.findById(uid).get();
+    
+     return card;
+    
+    
+    
+  }
+  @PostMapping(path = "/removeCard") 
+  @CrossOrigin
+
+  public @ResponseBody String removeCard(@RequestParam int cardId) throws JsonProcessingException {
+    Long uid=(long)cardId;
+    cardRepository.deleteById( uid);
+   
+    return "success";
+    
   }
   @PostMapping(path="/editUser") // Map ONLY POST Requests
   @CrossOrigin
@@ -136,6 +152,43 @@ public class MainController {
     
     return user.getId();
   }
+  @PostMapping(path="/addUser") // Map ONLY POST Requests
+  @CrossOrigin
+  public @ResponseBody Long newUser(@RequestParam String firstname, @RequestParam String surname,
+      @RequestParam String phone, @RequestParam String address, @RequestParam String email,
+      @RequestParam String password) 
+  {
+ 
+    User user = new User();
+    user.setFirstname(firstname);
+    user.setSurname(surname);
+    user.setEmail(email);
+    user.setPhone(phone);
+    user.setAddress(address);
+    user.setPassword(address);
+    userRepository.save(user);
+    
+    return user.getId();
+  }
+  @PostMapping(path="/editCard") // Map ONLY POST Requests
+  @CrossOrigin
+@ResponseBody String editCard(@RequestParam int cardId, @RequestParam String cardname,@RequestParam String cardnum, @RequestParam String cardcvc, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date carddate) {
+    // This returns a JSON or XML with the users
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh");  
+    String strDate = dateFormat.format(carddate);  
+System.out.println("card");
+  
+Card card =cardRepository.findById((long)cardId).get();
+card.setCardcvc(cardcvc);
+card.setCardnum(cardnum);
+card.setCardname(cardname);
+card.setCarddate(strDate);
+
+cardRepository.save(card);
+
+return "success";
+}
+
   @PostMapping(path="/getUser") // Map ONLY POST Requests
   @CrossOrigin
   public @ResponseBody User getUser(@RequestParam int userId) 

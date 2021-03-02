@@ -13,11 +13,13 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="action_page.php" style="border:1px solid #ccc">
-        <div class="container">
-          <h1>Edit Your Details</h1>
-          <p>Edit the text in each box and submit</p>
-          <hr>
+  <form  style="border:1px solid #ccc">
+    <div class="container">
+      <h1>Edit Your Details</h1>
+      <p>Edit the text in each box and submit</p>
+      
+      <hr>
+      <button id='editcards'   >Edit Card Details</button>
       
           <label for="email"><b>Email</b></label>
           <input id="email" type="text" placeholder="Enter Email" name="email" required>
@@ -40,12 +42,17 @@
       
           <div class="clearfix">
             <button type="button" class="cancelbtn">Cancel</button>
-            <button type="submit" id="signUp" class="signupbtn">Sign Up</button>
+            <button type="submit" id="signUp" class="signupbtn">Submit</button>
           </div>
         </div>
       </form>
 </body>
-<script>
+<script>  
+document.getElementById('editcards').addEventListener('click', function editcards(e){
+  console.log('hello')
+  e.preventDefault()
+  window.location.replace('./editCards.html')
+})
 
        
     myStorage = window.localStorage;
@@ -102,24 +109,19 @@
             var modal_address=document.getElementById('address').value
             var modal_password=document.getElementById('password').value
             console.log(fname,modal_surname,modal_phone,modal_address)
-            axios.post('http://localhost:8080/flight/editUser',null, { params:{
-                userId: window.localStorage.getItem('userId'),
-              firstname: fname,
-              surname:modal_surname,
-              phone:modal_phone,
-              address:modal_address,
-              email:modal_email,
-              password:modal_password}
+            axios.post('http://localhost:8080/flight/addCard',null, { params:{
+              
+              userId: userid,
+              cardname:cardname,
+              cardnum:carnnum,
+              cardcvc:cardcvc,
+              carddate:carddate,
+          }
             
           })
           .then(function (response) {
-              myStorage.setItem('userId',response.data)
-              myStorage.setItem('logged_in', 'true');
-  
-            console.log(response);
-            window.location.replace("/reservationspage.html");
-  
-          })
+             
+            })
           .catch(function (error) {
             console.log(error);
           })

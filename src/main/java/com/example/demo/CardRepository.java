@@ -11,5 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 // CRUD refers Create, Read, Update, Delete
 
 public interface CardRepository extends JpaRepository<Card, Long> {
+    @Query(value="SELECT * FROM cards u WHERE u.card_user = ?1", nativeQuery = true)
+    List<Card> findByCardUser(long card_user);
 
 }

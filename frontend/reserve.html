@@ -75,9 +75,11 @@
           
         })
         .then(function (response) {
-            myStorage.setItem('userId',response.data)
+            window.localStorage.setItem('user', response.data);
+                window.localStorage.setItem('userId', response.data);
+                window.localStorage.setItem('logged_in', 'true');
           console.log(response);
-          window.location.replace("./reservationspage.html");
+          window.location.replace("./pay.html");
 
         })
         .catch(function (error) {
@@ -87,17 +89,7 @@
         
           
           }
-          if(element.id == 'cardDetails'){
-            e.preventDefault()
-            var card_name=document.getElementById('modal1_name').value
-            var card_number=document.getElementById('modal1_number').value
-            var card_cvc=document.getElementById('modal1_cvc').value
-            var card_date=document.getElementById('modal1_date').value
-            console.log(card_name,card_number,card_cvc)
-
-            
-
-          }
+         
   })
 
   </script>
