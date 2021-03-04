@@ -119,7 +119,8 @@
         if(element.id == 'chooseCard'){
 
             e.preventDefault()
-            var flightId=element.value
+            var flightId=window.localStorage.getItem('flightId')
+            //var flightId=element.value
             window.localStorage.setItem('flightId',flightId)
             console.log(window.localStorage.getItem("logged_in"))
 
@@ -148,6 +149,7 @@
           }
         }
           if(element.id == 'reserve'){
+            window.localStorage.setItem('flightId',element.value)
             if(!(window.localStorage.getItem("logged_in")=="false"||window.localStorage.getItem("logged_in")==null))
               {
             document.getElementById('id02').style.display='block'
@@ -197,7 +199,7 @@
                 b.classList.add("btn-primary");
                 b.setAttribute("value",cards[i].card_id);
                 //setting the attribute of 
-                b.setAttribute("id",'cardDetails');
+                b.setAttribute("id",'chooseCard');
 
                 b.appendChild(document.createTextNode("Choose Card"));
                 date.appendChild(b)
@@ -389,7 +391,7 @@ if(e.target.value =="account"){
         var destination=document.getElementById("destination").value
         var date=document.getElementById("date").value
         console.log(departing,destination,date)
-        axios.get( `http://localhost:8080/flight/search`, { params: { departing: departing, destination: destination,departureTime: date} }).then(function (response){
+        axios.get( `http://localhost:8080/flight/search`, { params: { departing: departing, destination: destination, departureTime: date} }).then(function (response){
             console.log(response)
             var data=response.data
 
