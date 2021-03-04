@@ -35,7 +35,7 @@
         </div>
       
         <div class="container" style="background-color:#f1f1f1">
-          <button type="button" class="cancelbtn">Cancel</button>
+          <button type="button" id="cancel" class="cancelbtn">Cancel</button>
           <span class="psw">Forgot <a href="#">password?</a></span>
         </div>
       </form>
@@ -48,7 +48,10 @@
         var email =document.getElementById('email').value
         var password=document.getElementById('password').value
 console.log(email,password)
-
+        if(e.target.id =="cancel"){
+            console.log(e.target.value)
+            window.location.replace("./index.html");
+        }
         if(e.target.id=='login'){
 
             axios.post('http://localhost:8080/flight/login',null,{params:{email:email,password:password}})
@@ -63,6 +66,7 @@ console.log(email,password)
 
 
             })
+
         }
     })
 </script>
