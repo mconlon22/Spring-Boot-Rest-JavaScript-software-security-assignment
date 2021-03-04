@@ -46,7 +46,7 @@
           <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
       
           <div class="clearfix">
-            <button type="button" class="cancelbtn">Cancel</button>
+            <button type="button" id ="cancel" class="cancelbtn">Cancel</button>
             <button type="submit" id="signUp" class="signupbtn">Submit</button>
           </div>
         </div>
@@ -54,6 +54,7 @@
 </body>
 <script>  
 document.getElementById('editcards').addEventListener('click', function editcards(e){
+
   console.log('hello')
   e.preventDefault()
   window.location.replace('./editCards.html')
@@ -103,6 +104,10 @@ document.getElementById('editcards').addEventListener('click', function editcard
     document.addEventListener("click",
     function submit(e){
         var element=e.target
+        if(element.id =="cancel"){
+            console.log(e.target.value)
+            window.location.replace("./index.html");
+        }
           if(element.id == 'signUp'){
             myStorage = window.localStorage;
             e.preventDefault()
