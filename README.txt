@@ -1,3 +1,10 @@
+Martin Conlon: 16403502
+Developed Backend and MYSQL database
+
+Michael Bradley: 16407672
+Developed frontend and performed testing 
+
+Setup:
 to run first create a local mysql database called assignment1,
 then using the mysql source command run "intialize_db.sql" to setup the database.
 In src/resources/application.properites change spring.datasource.password to be equal to your mysql server's password,
