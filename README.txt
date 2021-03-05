@@ -1,7 +1,9 @@
 Martin Conlon: 16403502
+(50%)
 Developed Backend and MYSQL database
 
 Michael Bradley: 16407672
+(50%)
 Developed frontend and performed testing 
 
 Setup:
